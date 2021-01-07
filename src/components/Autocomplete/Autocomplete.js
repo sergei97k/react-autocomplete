@@ -8,6 +8,7 @@ import styles from "./Autocomplete.module.scss";
 const Autocomplete = ({ value, options, onChange }) => {
   const [userInput, setUserInput] = useState(value);
   const [filteredOptions, setFilteredOptions] = useState(options);
+  const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
     const filteredByExistingWord = filterByExistingWord(options, userInput);
@@ -18,6 +19,16 @@ const Autocomplete = ({ value, options, onChange }) => {
     setUserInput(e.target.value);
   };
 
+  const handleUserInputFocus = () => {
+    setShowOptions(true);
+  };
+
+  const handleOptionClick = (chosenOption) => () => {
+    onChange(chosenOption);
+    setUserInput(chosenOption);
+    setShowOptions(false);
+  };
+
   return (
     <div>
       <input
@@ -25,20 +36,23 @@ const Autocomplete = ({ value, options, onChange }) => {
         className={styles.autocomplete}
         value={userInput}
         onChange={handleUserInputChange}
+        onFocus={handleUserInputFocus}
       />
 
-      <div className={styles.autocompleteResult}>
-        {filteredOptions.map((option, index) => {
-          const key = `${option}_${index}`;
-          return (
-            <p key={key}>
-              <button type="button" onClick={onChange}>
-                {option}
-              </button>
-            </p>
-          );
-        })}
-      </div>
+      {showOptions && (
+        <div className={styles.autocompleteResult}>
+          {filteredOptions.map((option, index) => {
+            const key = `${option}_${index}`;
+            return (
+              <p key={key}>
+                <button type="button" onClick={handleOptionClick(option)}>
+                  {option}
+                </button>
+              </p>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };
