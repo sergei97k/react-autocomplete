@@ -1,0 +1,2 @@
+#Ignore assets in Storybook folder:
+src/stories/assets
