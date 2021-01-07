@@ -29,6 +29,31 @@ const Autocomplete = ({ value, options, onChange }) => {
     setShowOptions(false);
   };
 
+  const renderOptions = () => {
+    if (!showOptions) {
+      return null;
+    }
+
+    if (!filteredOptions.length) {
+      return <p>No results</p>;
+    }
+
+    return (
+      <div className={styles.autocompleteResult}>
+        {filteredOptions.map((option, index) => {
+          const key = `${option}_${index}`;
+          return (
+            <p key={key}>
+              <button type="button" onClick={handleOptionClick(option)}>
+                {option}
+              </button>
+            </p>
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
     <div>
       <input
@@ -39,20 +64,7 @@ const Autocomplete = ({ value, options, onChange }) => {
         onFocus={handleUserInputFocus}
       />
 
-      {showOptions && (
-        <div className={styles.autocompleteResult}>
-          {filteredOptions.map((option, index) => {
-            const key = `${option}_${index}`;
-            return (
-              <p key={key}>
-                <button type="button" onClick={handleOptionClick(option)}>
-                  {option}
-                </button>
-              </p>
-            );
-          })}
-        </div>
-      )}
+      {renderOptions()}
     </div>
   );
 };
