@@ -3,26 +3,24 @@
   font-size: 12px;
 }
 
-#autocomplete,
-#autocomplete_result {
+.autocomplete,
+.autocompleteResult {
   width: 200px;
   box-sizing: border-box;
-}
-
-#autocomplete {
   border: 1px solid silver;
-  outline: none;
-  margin: 0;
   background: #fff;
 }
 
-#autocomplete_result {
-  border: 1px solid silver;
+.autocomplete {
+  outline: none;
+  margin: 0;
+}
+
+.autocompleteResult {
   border-top: 0;
   position: absolute;
   overflow: auto;
   max-height: 93px;
-  background: #fff;
 
   p {
     padding: 4px;

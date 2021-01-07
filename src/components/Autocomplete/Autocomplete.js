@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "./Autocomplete.scss";
+import styles from "./Autocomplete.module.scss";
 
 const Autocomplete = ({ value, options, onChange }) => (
   <div>
-    <input value={value} type="text" id="autocomplete" />
+    <input value={value} type="text" className={styles.autocomplete} />
 
-    <div id="autocomplete_result">
+    <div className={styles.autocompleteResult}>
       {options.map((option, index) => {
         const key = `${option}_${index}`;
         return (
