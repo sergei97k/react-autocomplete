@@ -1,26 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+
+import { filterByExistingWord } from "./helpers";
 
 import styles from "./Autocomplete.module.scss";
 
-const Autocomplete = ({ value, options, onChange }) => (
-  <div>
-    <input value={value} type="text" className={styles.autocomplete} />
+const Autocomplete = ({ value, options, onChange }) => {
+  const [userInput, setUserInput] = useState(value);
+  const [filteredOptions, setFilteredOptions] = useState(options);
 
-    <div className={styles.autocompleteResult}>
-      {options.map((option, index) => {
-        const key = `${option}_${index}`;
-        return (
-          <p key={key}>
-            <button type="button" onClick={onChange}>
-              {option}
-            </button>
-          </p>
-        );
-      })}
+  useEffect(() => {
+    const filteredByExistingWord = filterByExistingWord(options, userInput);
+    setFilteredOptions(filteredByExistingWord);
+  }, [userInput, options]);
+
+  const handleUserInputChange = (e) => {
+    setUserInput(e.target.value);
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        className={styles.autocomplete}
+        value={userInput}
+        onChange={handleUserInputChange}
+      />
+
+      <div className={styles.autocompleteResult}>
+        {filteredOptions.map((option, index) => {
+          const key = `${option}_${index}`;
+          return (
+            <p key={key}>
+              <button type="button" onClick={onChange}>
+                {option}
+              </button>
+            </p>
+          );
+        })}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 Autocomplete.propTypes = {
   /**
