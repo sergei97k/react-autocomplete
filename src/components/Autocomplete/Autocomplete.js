@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "./styles.css";
+import "./Autocomplete.scss";
 
 const Autocomplete = ({ value, options, onChange }) => (
   <div>
