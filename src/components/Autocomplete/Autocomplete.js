@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 
-import { ClickOutsideWrapper } from "components";
+import useClickOutside from "hooks/useClickOutside";
 
 import { filterByExistingWord } from "./helpers";
 
@@ -11,6 +11,15 @@ const Autocomplete = ({ value, options, onChange }) => {
   const [userInput, setUserInput] = useState(value);
   const [filteredOptions, setFilteredOptions] = useState(options);
   const [showOptions, setShowOptions] = useState(false);
+
+  const wrapperRef = useRef(null);
+
+  const handleClickOutside = () => {
+    setUserInput(value);
+    setShowOptions(false);
+  };
+
+  useClickOutside(wrapperRef, handleClickOutside);
 
   useEffect(() => {
     const filteredByExistingWord = filterByExistingWord(options, userInput);
@@ -32,11 +41,6 @@ const Autocomplete = ({ value, options, onChange }) => {
   const handleOptionClick = (chosenOption) => () => {
     onChange(chosenOption);
     setUserInput(chosenOption);
-    setShowOptions(false);
-  };
-
-  const handleClickOutside = () => {
-    setUserInput(value);
     setShowOptions(false);
   };
 
@@ -72,7 +76,7 @@ const Autocomplete = ({ value, options, onChange }) => {
   };
 
   return (
-    <ClickOutsideWrapper onClickOutside={handleClickOutside}>
+    <div ref={wrapperRef}>
       <input
         type="text"
         className={styles.autocomplete}
@@ -82,7 +86,7 @@ const Autocomplete = ({ value, options, onChange }) => {
       />
 
       {renderOptions()}
-    </ClickOutsideWrapper>
+    </div>
   );
 };
 
