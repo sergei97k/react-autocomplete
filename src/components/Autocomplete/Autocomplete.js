@@ -44,16 +44,22 @@ const Autocomplete = ({ value, options, onChange }) => {
 
     return (
       <div className={styles.autocompleteResult}>
-        {filteredOptions.map((option, index) => {
-          const key = `${option}_${index}`;
-          return (
-            <p key={key}>
-              <button type="button" onClick={handleOptionClick(option)}>
-                {option}
-              </button>
-            </p>
-          );
-        })}
+        <ul className={styles.optionsList}>
+          {filteredOptions.map((option, index) => {
+            const key = `${option}_${index}`;
+            return (
+              <li key={key} className={styles.option}>
+                <button
+                  type="button"
+                  className={styles.optionButton}
+                  onClick={handleOptionClick(option)}
+                >
+                  {option}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     );
   };
