@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
+import withOutsideClick from "hocs/withClickOutside";
+
 import { filterByExistingWord } from "./helpers";
 
 import styles from "./Autocomplete.module.scss";
@@ -30,6 +32,11 @@ const Autocomplete = ({ value, options, onChange }) => {
   const handleOptionClick = (chosenOption) => () => {
     onChange(chosenOption);
     setUserInput(chosenOption);
+    setShowOptions(false);
+  };
+
+  const handleClickOutside = () => {
+    setUserInput(value);
     setShowOptions(false);
   };
 
@@ -64,8 +71,8 @@ const Autocomplete = ({ value, options, onChange }) => {
     );
   };
 
-  return (
-    <div>
+  const renderAutocomplete = () => (
+    <>
       <input
         type="text"
         className={styles.autocomplete}
@@ -75,7 +82,23 @@ const Autocomplete = ({ value, options, onChange }) => {
       />
 
       {renderOptions()}
-    </div>
+    </>
+  );
+
+  const WrapperComponent = withOutsideClick(renderAutocomplete);
+
+  return (
+    <WrapperComponent onClickOutside={handleClickOutside}>
+      <input
+        type="text"
+        className={styles.autocomplete}
+        value={userInput}
+        onChange={handleUserInputChange}
+        onFocus={handleUserInputFocus}
+      />
+
+      {renderOptions()}
+    </WrapperComponent>
   );
 };
 
