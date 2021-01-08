@@ -15,6 +15,10 @@ const Autocomplete = ({ value, options, onChange }) => {
     setFilteredOptions(filteredByExistingWord);
   }, [userInput, options]);
 
+  useEffect(() => {
+    setUserInput(value);
+  }, [value]);
+
   const handleUserInputChange = (e) => {
     setUserInput(e.target.value);
   };
