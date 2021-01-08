@@ -76,7 +76,7 @@ const Autocomplete = ({ value, options, onChange }) => {
   };
 
   return (
-    <div ref={wrapperRef}>
+    <div ref={wrapperRef} className={styles.autocompleteWrapper}>
       <input
         type="text"
         className={styles.autocomplete}
