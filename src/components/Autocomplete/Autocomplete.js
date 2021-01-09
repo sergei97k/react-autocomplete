@@ -7,7 +7,7 @@ import { filterByExistingWord } from "./helpers";
 
 import styles from "./Autocomplete.module.scss";
 
-const Autocomplete = ({ value, options, onChange }) => {
+const Autocomplete = ({ value, options, onChange, renderOption }) => {
   const [userInput, setUserInput] = useState(value);
   const [filteredOptions, setFilteredOptions] = useState(options);
   const [showOptions, setShowOptions] = useState(false);
@@ -65,7 +65,7 @@ const Autocomplete = ({ value, options, onChange }) => {
                   className={styles.optionButton}
                   onClick={handleOptionClick(option)}
                 >
-                  {option}
+                  {renderOption(option)}
                 </button>
               </li>
             );
@@ -90,6 +90,10 @@ const Autocomplete = ({ value, options, onChange }) => {
   );
 };
 
+Autocomplete.defaultProps = {
+  renderOption: (value) => value,
+};
+
 Autocomplete.propTypes = {
   /**
    * Selected item value
@@ -103,6 +107,10 @@ Autocomplete.propTypes = {
    * Function that is called when an item is selected
    */
   onChange: PropTypes.func.isRequired,
+  /**
+   * Render custom option view
+   */
+  renderOption: PropTypes.func,
 };
 
 export default Autocomplete;

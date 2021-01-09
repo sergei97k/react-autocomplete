@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import Autocomplete from "./Autocomplete";
 
 const SIMPLE_DB = ["fillLine", "fillCircle", "fillCircleMore"];
+const CUSTOM_DB = [
+  { name: "ETH", balance: 220 },
+  { name: "ETC", balance: 100 },
+];
 
 export default {
   title: "Components/Autocomplete",
@@ -23,4 +27,29 @@ export const Simple = Template.bind({});
 Simple.args = {
   value: "",
   options: SIMPLE_DB,
+};
+
+export const Custom = Template.bind({});
+Custom.args = {
+  value: "",
+  options: CUSTOM_DB.map(({ name }) => name),
+  renderOption: (value) => (
+    <b>
+      <em>{value}</em>
+    </b>
+  ),
+};
+
+export const CustomWithText = Template.bind({});
+CustomWithText.args = {
+  value: "",
+  options: CUSTOM_DB.map(({ name }) => name),
+  renderOption: (value) => {
+    const { balance } = CUSTOM_DB.find(({ name }) => name === value);
+    return (
+      <>
+        <b>{value}</b>(balance: {balance})
+      </>
+    );
+  },
 };
