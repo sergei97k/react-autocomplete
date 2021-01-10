@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 
+import { Portal } from "components";
 import useClickOutside from "hooks/useClickOutside";
 
 import { filterByExistingWord } from "./helpers";
@@ -85,7 +86,7 @@ const Autocomplete = ({ value, options, onChange, renderOption }) => {
         onFocus={handleUserInputFocus}
       />
 
-      {renderOptions()}
+      <Portal>{renderOptions()}</Portal>
     </div>
   );
 };
