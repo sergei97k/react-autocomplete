@@ -1,25 +1,12 @@
-import { Component } from "react";
 import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 
-const portalRoot = document.getElementById("portal-root");
+import usePortal from "hooks/usePortal";
 
-class Portal extends Component {
-  el = document.createElement("div");
-
-  componentDidMount() {
-    portalRoot.appendChild(this.el);
-  }
-
-  componentWillUnmount() {
-    portalRoot.removeChild(this.el);
-  }
-
-  render() {
-    const { children } = this.props;
-    return createPortal(children, this.el);
-  }
-}
+const Portal = ({ children }) => {
+  const container = usePortal();
+  return createPortal(children, container);
+};
 
 Portal.propTypes = {
   children: PropTypes.element.isRequired,
