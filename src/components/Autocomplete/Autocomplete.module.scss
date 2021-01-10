@@ -7,20 +7,16 @@
   width: fit-content;
 }
 
-.autocomplete,
-.autocompleteResult {
-  width: 200px;
-  box-sizing: border-box;
-  border: 1px solid silver;
-  background: #fff;
-}
-
 .autocomplete {
-  outline: none;
+  width: 200px;
   margin: 0;
 }
 
 .autocompleteResult {
+  width: 200px;
+  border: 1px solid silver;
+  box-sizing: border-box;
+  background: #fff;
   border-top: 0;
   position: absolute;
   overflow: auto;

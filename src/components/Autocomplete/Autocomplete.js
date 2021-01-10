@@ -5,6 +5,7 @@ import { Portal } from "components";
 import useClickOutside from "hooks/useClickOutside";
 
 import { filterByExistingWord } from "./helpers";
+import { Input } from "./components";
 
 import styles from "./Autocomplete.module.scss";
 
@@ -30,10 +31,6 @@ const Autocomplete = ({ value, options, onChange, renderOption }) => {
   useEffect(() => {
     setUserInput(value);
   }, [value]);
-
-  const handleUserInputChange = (e) => {
-    setUserInput(e.target.value);
-  };
 
   const handleUserInputFocus = () => {
     setShowOptions(true);
@@ -78,11 +75,10 @@ const Autocomplete = ({ value, options, onChange, renderOption }) => {
 
   return (
     <div ref={wrapperRef} className={styles.autocompleteWrapper}>
-      <input
-        type="text"
+      <Input
         className={styles.autocomplete}
         value={userInput}
-        onChange={handleUserInputChange}
+        onChange={setUserInput}
         onFocus={handleUserInputFocus}
       />
 
