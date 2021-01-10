@@ -4,7 +4,7 @@ import cx from "classnames";
 
 import styles from "./Input.module.scss";
 
-const Input = ({ type, className, value, onChange, onFocus }) => {
+const Input = ({ type, className, value, onChange, onFocus, tabIndex }) => {
   const handleChange = ({ target }) => onChange(target.value);
 
   return (
@@ -14,6 +14,7 @@ const Input = ({ type, className, value, onChange, onFocus }) => {
       value={value}
       onChange={handleChange}
       onFocus={onFocus}
+      tabIndex={tabIndex}
     />
   );
 };
@@ -22,6 +23,7 @@ Input.defaultProps = {
   type: "text",
   className: null,
   onFocus: () => {},
+  tabIndex: 0,
 };
 
 Input.propTypes = {
@@ -30,6 +32,7 @@ Input.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
+  tabIndex: PropTypes.number,
 };
 
 export default Input;

@@ -5,7 +5,7 @@ import { Portal } from "components";
 import useClickOutside from "hooks/useClickOutside";
 
 import { filterByExistingWord } from "./helpers";
-import { Input } from "./components";
+import { Input, OptionsList } from "./components";
 
 import styles from "./Autocomplete.module.scss";
 
@@ -52,30 +52,19 @@ const Autocomplete = ({ value, options, onChange, renderOption }) => {
     }
 
     return (
-      <div className={styles.autocompleteResult}>
-        <ul className={styles.optionsList}>
-          {filteredOptions.map((option, index) => {
-            const key = `${option}_${index}`;
-            return (
-              <li key={key} className={styles.option}>
-                <button
-                  type="button"
-                  className={styles.optionButton}
-                  onClick={handleOptionClick(option)}
-                >
-                  {renderOption(option)}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      <OptionsList
+        options={filteredOptions}
+        handleOptionClick={handleOptionClick}
+        renderOption={renderOption}
+        className={styles.autocompleteResult}
+      />
     );
   };
 
   return (
     <div ref={wrapperRef} className={styles.autocompleteWrapper}>
       <Input
+        tabIndex={-1}
         className={styles.autocomplete}
         value={userInput}
         onChange={setUserInput}
