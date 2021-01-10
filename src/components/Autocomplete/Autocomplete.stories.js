@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import Autocomplete from "./Autocomplete";
 
 const SIMPLE_DB = ["fillLine", "fillCircle", "fillCircleMore"];
@@ -6,6 +6,7 @@ const CUSTOM_DB = [
   { name: "ETH", balance: 220 },
   { name: "ETC", balance: 100 },
 ];
+const URL = "https://rickandmortyapi.com/api/character";
 
 export default {
   title: "Components/Autocomplete",
@@ -52,4 +53,44 @@ CustomWithText.args = {
       </>
     );
   },
+};
+
+const AsyncTemplate = (args) => {
+  const [value, setValue] = useState(args.value);
+  const [options, setOptions] = useState([]);
+
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await fetch(URL);
+      const { results } = await response.json();
+      setOptions(results);
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  useEffect(() => {
+    setValue(args.value);
+  }, [args.value]);
+
+  const characterNameOptions = useMemo(() => options.map(({ name }) => name), [
+    options,
+  ]);
+
+  return (
+    <Autocomplete
+      value={value}
+      onChange={setValue}
+      options={characterNameOptions}
+    />
+  );
+};
+
+export const Async = AsyncTemplate.bind({});
+Async.args = {
+  value: "",
 };
