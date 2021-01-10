@@ -48,16 +48,18 @@ const Autocomplete = ({ value, options, onChange, renderOption }) => {
     }
 
     if (!filteredOptions.length) {
-      return <p>No results</p>;
+      return <p className={styles.noResults}>No results</p>;
     }
 
     return (
-      <OptionsList
-        options={filteredOptions}
-        handleOptionClick={handleOptionClick}
-        renderOption={renderOption}
-        className={styles.autocompleteResult}
-      />
+      <Portal>
+        <OptionsList
+          options={filteredOptions}
+          handleOptionClick={handleOptionClick}
+          renderOption={renderOption}
+          className={styles.autocompleteResult}
+        />
+      </Portal>
     );
   };
 
@@ -71,7 +73,7 @@ const Autocomplete = ({ value, options, onChange, renderOption }) => {
         onFocus={handleUserInputFocus}
       />
 
-      <Portal>{renderOptions()}</Portal>
+      {renderOptions()}
     </div>
   );
 };
